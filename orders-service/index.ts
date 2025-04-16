@@ -20,13 +20,15 @@ app.get("/orders/:id", async (req: any, res: any) => {
 
   try {
     const userResponse = await axios.get(
-      `http://localhost:3001/users/${order.userId}`
+      // `http://localhost:3001/users/${order.userId}`
+      `http://users-service:3001/users/${order.userId}` // Use the service name instead of localhost
     );
     res.json({
       order,
       user: userResponse.data,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "User service unavailable" });
   }
 });

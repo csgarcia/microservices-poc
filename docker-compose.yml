@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  users-service:
+    container_name: users-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./user-service:/app
+      - /app/node_modules # avoid overwriting node_modules
+    ports:
+      - "3001:3001"
+
+  orders-service:
+    container_name: orders-service
+    build:
+      context: ./orders-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./orders-service:/app
+      - /app/node_modules
+    ports:
+      - "3002:3002"
+
+# network is not needed as services are in the same docker-compose file
