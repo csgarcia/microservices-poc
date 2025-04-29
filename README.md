@@ -98,12 +98,8 @@ This project demonstrates a microservices architecture using Docker and Node.js.
 - The services communicate using the service names (`users-service` and `orders-service`) defined in the `docker-compose.yml` file.
 - Nodemon is used for hot-reloading during development.
 
-## Future Improvements
-
-- Add a database for persistent storage.
-- Implement proper error handling and logging.
-- Add unit and integration tests.
-- Use an API gateway for routing and load balancing.
+## [Feature] Adding RabbitMQ
+RabbitMQ is a message broker that enables microservices to communicate asynchronously using queues and messages instead of direct HTTP calls.
 
 ## License
 

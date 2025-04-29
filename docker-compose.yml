@@ -1,6 +1,16 @@
 version: "3.8"
 
 services:
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    volumes:
+      - ./gateway:/app
+      - /app/node_modules # avoid overwriting node_modules
+    ports:
+      - "3000:3000"
   users-service:
     container_name: users-service
     build:
@@ -22,5 +32,4 @@ services:
       - /app/node_modules
     ports:
       - "3002:3002"
-
 # network is not needed as services are in the same docker-compose file
