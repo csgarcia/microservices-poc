@@ -8,6 +8,11 @@ This project demonstrates a microservices architecture using Docker and Node.js.
 .
 ├── .gitignore
 ├── docker-compose.yml
+├── api-gateway/
+│   ├── Dockerfile
+│   ├── index.ts
+│   ├── package.json
+│   ├── tsconfig.json
 ├── orders-service/
 │   ├── Dockerfile
 │   ├── index.ts
@@ -33,6 +38,11 @@ This project demonstrates a microservices architecture using Docker and Node.js.
    - Fetches user details from the `user-service` for each order.
    - Runs on port `3002`.
 
+3. **API Gateway (`api-gateway`)**
+   - Acts as a single entry point for clients to interact with the microservices.
+   - Routes requests to the appropriate service (e.g., `user-service` or `orders-service`).
+   - Runs on port `3000`.
+
 ## Prerequisites
 
 - [Docker](https://www.docker.com/) installed on your machine.
@@ -48,6 +58,7 @@ This project demonstrates a microservices architecture using Docker and Node.js.
    ```
 
 2. Access the services:
+   - API Gateway: [http://localhost:3000](http://localhost:3000)
    - User Service: [http://localhost:3001](http://localhost:3001)
    - Orders Service: [http://localhost:3002](http://localhost:3002)
 
@@ -59,6 +70,8 @@ This project demonstrates a microservices architecture using Docker and Node.js.
    npm install
    cd ../orders-service
    npm install
+   cd ../api-gateway
+   npm install
    ```
 
 2. Start the services locally:
@@ -67,13 +80,26 @@ This project demonstrates a microservices architecture using Docker and Node.js.
    npm run dev
    cd ../orders-service
    npm run dev
+   cd ../api-gateway
+   npm run dev
    ```
 
 3. Access the services:
+   - API Gateway: [http://localhost:3000](http://localhost:3000)
    - User Service: [http://localhost:3001](http://localhost:3001)
    - Orders Service: [http://localhost:3002](http://localhost:3002)
 
 ## API Endpoints
+
+### API Gateway
+
+- **GET** `/api/users/:id`
+  - Fetches user details by ID from the `user-service`.
+  - Example: `GET http://localhost:3000/api/users/1`
+
+- **GET** `/api/orders/:id`
+  - Fetches order details by ID from the `orders-service`.
+  - Example: `GET http://localhost:3000/api/orders/101`
 
 ### User Service
 
@@ -97,6 +123,21 @@ This project demonstrates a microservices architecture using Docker and Node.js.
 
 - The services communicate using the service names (`users-service` and `orders-service`) defined in the `docker-compose.yml` file.
 - Nodemon is used for hot-reloading during development.
+
+## Pros and Cons of Synchronous Communication in Microservices
+
+### Pros
+1. **Simplicity**: Easy to implement and understand, especially for small systems.
+2. **Real-Time Communication**: Immediate responses make it suitable for request-response scenarios.
+3. **Debugging**: Easier to trace and debug since the flow is linear and predictable.
+4. **Standard Protocols**: Uses widely adopted protocols like HTTP/HTTPS, making it compatible with most tools and libraries.
+
+### Cons
+1. **Tight Coupling**: Services are dependent on each other's availability and endpoints.
+2. **Latency**: The caller must wait for the response, which can increase overall response time.
+3. **Scalability Issues**: High traffic can overwhelm services, leading to bottlenecks.
+4. **Fault Tolerance**: If one service is down, the entire request chain may fail.
+5. **Complex Error Handling**: Requires handling timeouts, retries, and cascading failures.
 
 ## [Feature] Adding RabbitMQ
 RabbitMQ is a message broker that enables microservices to communicate asynchronously using queues and messages instead of direct HTTP calls.
