@@ -3,6 +3,8 @@
 /synchronous-communication/user-service/node_modules
 /synchronous-communication/orders-service/node_modules
 /synchronous-communication/gateway/node_modules
+/asynchronous-messaging/orders-service/node_modules
+/asynchronous-messaging/orders-consumer-service/node_modules
 /.DS_Store
 /.idea
 /.vscode
